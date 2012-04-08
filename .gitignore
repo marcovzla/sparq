@@ -1,0 +1,14 @@
+Makefile
+*.fasl
+*.o
+*.l[ao]
+.deps
+.libs
+*.swp
+SparQ.bin
+config.h
+config.log
+config.status
+libtool
+stamp-h1
+Source/SparQ
