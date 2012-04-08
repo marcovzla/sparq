@@ -1,0 +1,5 @@
+#!/bin/sh
+sparqbin=`dirname "$0"`
+cd "$sparqbin"
+
+./SparQ.bin --noinform --end-runtime-options --no-sysinit --no-userinit --end-toplevel-options -c `pwd` $*

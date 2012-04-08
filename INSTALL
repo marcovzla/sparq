@@ -1,0 +1,31 @@
+SparQ is currently not available in binary versions. To install and use
+SparQ, you need
+
+ * gcc and g++, version 2.95 or higher
+ * GNU libtool, version 1.4.3 or higher
+ * Steel Bank Common Lisp (SBCL), version 0.9.10 or higher
+
+The source code of the actual version of SparQ and appropriate
+documentation is available at the SparQ-homepage
+
+http://www.sfbtr8.uni-bremen.de/project/r3/sparq/
+
+
+To build a running version of SparQ, unpack the source code package,
+enter the newly created SparQ directory (called sparq-<version>) and
+run
+
+./configure
+
+Usually, no errors should occur and you should be able to build the
+SparQ executables by running
+
+make
+
+All executables will be installed within the SparQ directory. Please
+note that you have to recompile SparQ if you move the directory to
+another place.
+
+Further instructions can be found in the SparQ Manual. If you encounter
+any problems during the build process, please contact the authors. If you
+use Mac Os X, please refer to README.MacOsX.

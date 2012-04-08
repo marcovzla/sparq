@@ -1,0 +1,15 @@
+
+SparQ is developed within the research project "Q-Shape: reasoning about paths,
+shapes, and configurations" part of the transregional collaborative research
+center funded by the Deutsche Forschungsgesellschaft. Financial support is
+gratefully acknowledged. For more information see:
+http://www.sfbtr8.spatial-cognition.de/project/r3/
+
+The people behind SparQ are:
+
+Frank Dylla           - calculi and qualification libraries
+Lutz Frommberger      - script and make magic, OPRA composition library
+Jae Hee Lee           - OPRA composition library
+Jan Oliver Wallgruen  - calculi and testing
+Diedrich Wolter       - main program
+
