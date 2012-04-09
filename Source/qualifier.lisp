@@ -76,6 +76,16 @@
       (signal-error "Specification '~a' is not of the required type dipole, i.e. (identifier start-x start-y dir-x dir-y)~%" it)
       it))
 
+;; funtion to generate all permutations of a list, found at:
+;; http://stackoverflow.com/questions/2087693/how-can-i-get-all-possible-permutations-of-a-list-with-common-lisp/8448611#8448611
+(defun all-permutations (lst &optional (remain lst))
+  (cond ((null remain) nil)
+        ((null (rest lst)) (list lst))
+        (t (append
+             (mapcar (lambda (l) (cons (first lst) l))
+                     (all-permutations (rest lst)))
+             (all-permutations (append (rest lst) (list (first lst))) (rest remain))))))
+
 ;; Dummy declaration to make SBCL happy
 (defgeneric qualify-scenario (arity option calculus scenario)
   (declare (ignore arity option calculus scenario)))
@@ -93,13 +103,16 @@
 
 (defmethod qualify-scenario ((arity (eql :binary)) (option (eql :all)) calculus scenario)
   (let ((qfun (calculi::calculus-qualifier calculus))
-	scene)
+        scene)
     (do ((o1s scenario (cdr o1s)))
-	((null o1s))
+      ((null o1s))
       (do ((o2s (cdr o1s) (cdr o2s)))
-	  ((null o2s))
-	(push (list (caar o1s) (funcall qfun (cdar o1s) (cdar o2s)) (caar o2s))
-	      scene)))
+        ((null o2s))
+        (dolist (tuple (all-permutations (list o1s o2s)))
+          (push (list (caar (first tuple))
+                      (funcall qfun (cdar (first tuple)) (cdar (second tuple)))
+                      (caar (second tuple)))
+                scene))))
     (nreverse scene)))
 
 (defmethod qualify-scenario ((arity (eql :ternary)) (option (eql :first2all)) calculus scenario)
@@ -112,15 +125,19 @@
 
 (defmethod qualify-scenario ((arity (eql :ternary)) (option (eql :all)) calculus scenario)
   (let ((qfun (calculi::calculus-qualifier calculus))
-	scene)
+        scene)
     (do ((o1s scenario (cdr o1s)))
-	((null o1s))
+      ((null o1s))
       (do ((o2s (cdr o1s) (cdr o2s)))
-	  ((null o2s))
-	(do ((o3s (cdr o2s) (cdr o3s)))
-	    ((null o3s))
-	  (push (list (caar o1s) (caar o2s) (funcall qfun (cdar o1s) (cdar o2s) (cdar o3s)) (caar o3s))
-		scene))))
+        ((null o2s))
+        (do ((o3s (cdr o2s) (cdr o3s)))
+          ((null o3s))
+          (dolist (triple (all-permutations (list o1s o2s o3s)))
+            (push (list (caar (first triple))
+                        (caar (second triple))
+                        (funcall qfun (cdar (first triple)) (cdar (second triple)) (cdar (third triple)))
+                        (caar (third triple)))
+                  scene)))))
     (nreverse scene)))
 
 (defun qualify (calculus cmd-stream stream state)
